@@ -29,11 +29,14 @@ interface Genre {
   url: string;
 }
 
-export default async function AnimePage({
-  params,
-}: {
-  params: { id: string };
-}) {
+interface PageProps {
+  params: {
+    id: string;
+  };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
+
+export default async function AnimePage({ params }: PageProps) {
   const { data: anime } = await getAnimeDetails(params.id);
 
   return (
