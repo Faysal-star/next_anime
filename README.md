@@ -4,6 +4,14 @@
 Just me, experimenting things.
 ```
 
+### Features
+
+- Search Anime
+- Search By Genre
+- View Detailed Info
+- Watch Trailer
+- Write Thoughts about Anime in Markdown Format [Saved In LocalStorage]
+
 ### Tools
 
 - NEXT.js 15

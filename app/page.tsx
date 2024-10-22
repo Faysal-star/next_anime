@@ -45,13 +45,16 @@ export default async function Home(props :{
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <div className="flex justify-between">
-        <h1 className="text-4xl font-bold mb-8 text-center">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-4xl font-bold">
           <Link href="/" className="bg-gradient-to-r from-blue-500 via-green-500 to-cyan-500 inline-block text-transparent bg-clip-text">
             NEXT Anime
           </Link>
         </h1>
+        <div className="flex gap-5 justify-center items-center">
+          <Link href="/thought" className="text-muted-foreground font-semibold hover:text-cyan-200"> My Thoughts</Link>
         <ModeToggle />
+        </div>
       </div>
 
       <SearchBar />
