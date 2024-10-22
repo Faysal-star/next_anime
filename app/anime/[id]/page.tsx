@@ -22,6 +22,13 @@ const getModifiedUrl = (url: string) => {
   }
 };
 
+interface Genre {
+  mal_id: number;
+  type: string;
+  name: string;
+  url: string;
+}
+
 export default async function AnimePage({
   params,
 }: {
@@ -91,7 +98,7 @@ export default async function AnimePage({
                 <div>
                   <h3 className="font-semibold">Genres:</h3>
                   <p className="text-muted-foreground">
-                    {anime.genres.map((genre: any) => genre.name).join(", ")}
+                    {anime.genres.map((genre: Genre) => genre.name).join(", ")}
                   </p>
                 </div>
                 <div>

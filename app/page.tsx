@@ -19,10 +19,15 @@ async function getGenres() {
     throw new Error("Failed to fetch genres");
   }
   const data = await response.json();
-  return data.data.map((genre: any) => ({
+  interface Genre {
+    mal_id: number;
+    type: string;
+    name: string;
+    url: string;
+  }
+  return data.data.map((genre: Genre ) => ({
     id: genre.mal_id,
     name: genre.name,
-    count: genre.count,
   }));
 }
 
