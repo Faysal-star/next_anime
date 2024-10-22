@@ -29,15 +29,13 @@ interface Genre {
   url: string;
 }
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
+type Params = Promise<{ id: string }>
 
-export default async function AnimePage({ params }: PageProps) {
-  const { data: anime } = await getAnimeDetails(params.id);
+export default async function AnimePage(props : {
+    params : Params
+}) {
+    const params = await props.params
+    const { data: anime } = await getAnimeDetails(params.id) 
 
   return (
     <div className="container mx-auto px-4 py-8">

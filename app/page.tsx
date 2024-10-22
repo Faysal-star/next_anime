@@ -31,11 +31,13 @@ async function getGenres() {
   }));
 }
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: { page?: string; q?: string; genre?: string };
+
+type SearchParams = Promise<{ page?: string; q?: string; genre?: string }>
+
+export default async function Home(props :{
+  searchParams : SearchParams
 }) {
+  const searchParams = props.searchParams
   const page = Number((await searchParams).page) || 1;
   const query = (await searchParams).q || "";
   const genre = (await searchParams).genre || "";
