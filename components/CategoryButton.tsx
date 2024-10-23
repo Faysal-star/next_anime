@@ -32,7 +32,7 @@ export default async function CategoryButtons( { AllCategories }: { AllCategorie
       ))}
       <Drawer>
         <DrawerTrigger>
-          <Button variant="outline">More</Button>
+          <Button variant="outline" className="bg-slate-600">More</Button>
         </DrawerTrigger>
         <DrawerContent className="fixed bottom-0 left-0 right-0 max-h-[90dvh]">
           <DrawerHeader>
