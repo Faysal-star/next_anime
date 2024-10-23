@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Card,
   CardContent,
@@ -9,20 +11,10 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { MoveRight } from "lucide-react";
-
-let lastRequestTime = 0;
-const RATE_LIMIT_DELAY = 500;
-
-async function wait(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import React from "react";
+import Loading from "@/app/Loading";
 
 async function getAnime(page: number, query: string, genre: string) {
-  const now = Date.now();
-  const timeSinceLastRequest = now - lastRequestTime;
-  if (timeSinceLastRequest < RATE_LIMIT_DELAY) {
-    await wait(RATE_LIMIT_DELAY - timeSinceLastRequest);
-  }
   let url = `https://api.jikan.moe/v4/top/anime?page=${page}`;
   if (query) {
     url = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(
@@ -33,20 +25,30 @@ async function getAnime(page: number, query: string, genre: string) {
   }
 
   console.log(url);
-  const res = await fetch(url, {
-    cache: 'force-cache',
-    next: {
-      revalidate: 3600
+  const cachedData = localStorage.getItem(url);
+  if (cachedData) {
+    const parsedData = JSON.parse(cachedData);
+    const now = new Date().getTime();
+    if (now - parsedData.timestamp < 10 * 60 * 1000) {
+      return parsedData.data;
     }
-  });
-  lastRequestTime = Date.now();
+  }
+
+  const res = await fetch(url);
+
+  if (res.ok) {
+    const data = await res.json();
+    localStorage.setItem(url, JSON.stringify({ data, timestamp: new Date().getTime() }));
+    return data;
+  }
+
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
   return res.json();
 }
 
-export default async function AnimeGrid({
+export default function AnimeGrid({
   page,
   query,
   genre,
@@ -55,7 +57,33 @@ export default async function AnimeGrid({
   query: string;
   genre: string;
 }) {
-  const data = await getAnime(page, query, genre);
+  const [loading, setLoading] = React.useState(true);
+  const [data, setData] = React.useState<any>(null);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    setLoading(true);
+    setError(null);
+    async function fetchData() {
+      try {
+        const result = await getAnime(page, query, genre);
+        setData(result);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An unknown error occurred");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [page, query, genre]);
+
+  if (loading) {
+    return <div><Loading /> </div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-6">

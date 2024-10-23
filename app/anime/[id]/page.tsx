@@ -48,8 +48,8 @@ export default async function AnimePage(props : {
         </Link>
       </div>
       {anime.trailer.embed_url && (
-        <div className="flex flex-col items-center w-full max-w-[50vw] mx-auto mb-5">
-          <h3 className="font-semibold text-4xl mb-4 text-blue-400">
+        <div className="flex flex-col items-center w-full max-w-[90vw] md:max-w-[50vw] mx-auto mb-5">
+          <h3 className="font-semibold text-2xl md:text-4xl mb-4 text-blue-400">
             {anime.title}
           </h3>
           <div className="w-full relative" style={{ paddingBottom: "56.25%" }}>
