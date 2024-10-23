@@ -111,7 +111,7 @@ export default function ThoughtsForm() {
             <div key={index} className="w-full md:w-1/2 px-2 mb-4">
               <Card className="h-full">
                 <div className="flex justify-between px-5 pt-5">
-                  <CardTitle className="hover:text-cyan-200">
+                  <CardTitle className="text-cyan-100 hover:text-cyan-200">
                     <span> #{index + 1} </span>
                     <Link
                       href={`/?q=${encodeURIComponent(savedReview.animeName)}`}

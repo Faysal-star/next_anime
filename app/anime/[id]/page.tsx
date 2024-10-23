@@ -70,15 +70,18 @@ export default async function AnimePage(props : {
             {anime.title}
           </CardTitle>
           <div className="flex flex-col md:flex-row gap-6">
-            <Image
-              src={anime.images.jpg.large_image_url}
-              alt={anime.title}
-              width={350}
-              height={500}
-              className="rounded-lg"
-            />
-            <CardContent className="flex-grow">
-              <p className="text-lg mb-4">{anime.synopsis}</p>
+            <div className="flex justify-center w-full md:w-[30%]">
+              <Image
+                src={anime.images.jpg.large_image_url}
+                alt={anime.title}
+                width={400}
+                height={500}
+                className="rounded-lg"
+                style={{objectFit: "contain" ,  objectPosition: "top"}}
+              />
+            </div>
+            <CardContent className="w-full md:w-[70%] p-0 md:p-4" >
+              <p className="md:text-lg mb-4">{anime.synopsis}</p>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <h3 className="font-semibold">Type:</h3>
